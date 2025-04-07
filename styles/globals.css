@@ -1,0 +1,172 @@
+@import 'tailwindcss';
+
+@plugin 'tailwindcss-animate';
+@plugin 'tailwindcss-animate';
+
+@custom-variant dark (&:is(.dark *));
+
+@font-face {
+  font-family: "Atma";
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/atma-semibold.woff2") format('woff2');
+}
+
+@font-face {
+  font-family: "Arial Rounded";
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/arial-rounded-mt.woff2") format('woff2');
+}
+
+@theme {
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-wiggle: wiggle 0.3s ease-in-out;
+
+  --color-main-bg-light: #f2e6ce;
+  --color-main-bg-dark: #352f44;
+
+  --color-secondary-bg-light: #ba4949;
+  --color-secondary-bg-dark: #4d3c77;
+
+  --color-custom-text-light: #3f1d38;
+  --color-custom-text-dark: #f8f5ec;
+
+  --color-custom-highlight: #6a6576;
+  --color-custom-highlight2: #837e90;
+  --color-custom-highlight3: hsl(26, 92%, 52%);
+  --color-btn-bg: #048645;
+  --color-hover-btn-bg: #03723b;
+  --color-hover-secondary-bg: hsl(0, 84%, 60%);
+
+  --breakpoint-mobile: 400px;
+  
+  --font-atma: "Atma", "sans-serif";
+  --font-arial-rounded: "Arial Rounded", "sans-serif";
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-8deg);
+    }
+    50% {
+      transform: rotate(8deg);
+    }
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-md)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+body {
+  transition: transform .3s ease-in-out;
+}
+
+.animated-btn:hover {
+  background: linear-gradient(270deg, #a2678a, #4d3c77, #F05454);
+  background-size: 600% 600%;
+
+  -webkit-animation: animateGradient 5s ease infinite;
+  -moz-animation: animateGradient 2s ease infinite;
+  -o-animation: animateGradient 5s ease infinite;
+  animation: animateGradient 5s ease infinite;
+}
+
+@-webkit-keyframes animateGradient {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-moz-keyframes animateGradient {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-o-keyframes animateGradient {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@keyframes animateGradient {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
