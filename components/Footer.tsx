@@ -35,7 +35,7 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <p>©2025 Vocab-It v{version}. Developed by Michael Savych. MIT Licensed.</p>
+      <p className="text-sm mt-5 text-center">©2025 Vocab-It v{version}. Developed by Michael Savych. MIT Licensed.</p>
     </footer>
   )
 }
