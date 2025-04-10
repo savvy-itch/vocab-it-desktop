@@ -34,7 +34,7 @@ export default function Navbar() {
     <nav className="bg-secondary-bg-light dark:bg-secondary-bg-dark py-2 sm:py-5 absolute top-8 left-0 right-0 transition-colors">
       <div className="w-11/12 mobile:w-4/5 mx-auto flex justify-between items-center">
         <Link to='/' className="flex items-center" title="Vocab-It - a language learning app">
-          <img src="/images/vocab-logo.png" className="-rotate-12 w-12 h-12 mobile:h-16 mobile:w-16" alt="logo" fetchPriority='high' />
+          <img src="./images/vocab-logo.png" className="-rotate-12 w-12 h-12 mobile:h-16 mobile:w-16" alt="logo" fetchPriority='high' />
           <p className="text-white text-4xl font-bold hidden sm:inline font-atma">Vocab-It</p>
         </Link>
         <div>

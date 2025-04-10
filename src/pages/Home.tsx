@@ -1,4 +1,3 @@
-import type { Route } from "./+types/home";
 import useProfileStore from "@/lib/profileStore";
 import { useEffect } from "react";
 import ProfileUsernameSection from "@/components/ProfileUsernameSection";
@@ -7,13 +6,6 @@ import ProfileWordSection from "@/components/ProfileWordSection";
 import DangerZone from "@/components/DangerZone";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/Footer";
-
-export function meta({ }: Route.MetaArgs) {
-  return [
-    { title: "Vocab-It | Profile" },
-    { name: "description", content: "Vocab-It is an app for learning languages" },
-  ];
-}
 
 export default function Home() {
   const {

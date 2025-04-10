@@ -1,16 +1,20 @@
 const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
+const path = require('path');
 
 module.exports = {
   packagerConfig: {
     asar: true,
-    extraResource: ['build']
+    extraResource: ['dist'],
+    icon: path.join(__dirname, 'dist/images/vocab-it')
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        setupIcon: path.join(__dirname, 'dist/images/vocab-it.ico')
+      },
     },
     {
       name: '@electron-forge/maker-zip',
@@ -18,7 +22,11 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        options: {
+          icon: path.join(__dirname, 'dist/images/AppList.targetsize-96.png')
+        }
+      },
     },
     {
       name: '@electron-forge/maker-rpm',

@@ -1,4 +1,5 @@
 import { HiOutlineExternalLink } from "react-icons/hi";
+import { version } from 'package.json';
 
 export default function Footer() {
   return (
@@ -34,6 +35,7 @@ export default function Footer() {
           </ul>
         </div>
       </div>
+      <p>©2025 Vocab-It v{version}. Developed by Michael Savych. MIT Licensed.</p>
     </footer>
   )
 }

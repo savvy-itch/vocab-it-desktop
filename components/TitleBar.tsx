@@ -1,4 +1,4 @@
-import '../titleBar.css';
+import '../styles/titleBar.css';
 
 export default function TitleBar() {
   return (

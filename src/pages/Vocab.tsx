@@ -1,10 +1,9 @@
 import { useVocabStore } from '@/lib/vocabStore';
-import type { Route } from './+types/vocab';
 import { useEffect, useState } from 'react';
 import type { VocabLocal, WordLocal } from '@/lib/types';
 import { useWordStore } from '@/lib/wordStore';
 import useProfileStore from '@/lib/profileStore';
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router';
 import { HiArrowLongLeft } from 'react-icons/hi2';
 import VocabTitleSection from '@/components/VocabTitleSection';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -18,16 +17,8 @@ import VocabAddWordForm from '@/components/VocabAddWordForm';
 import { Toaster } from '@/components/ui/toaster';
 import Footer from '@/components/Footer';
 
-export function meta({ }: Route.MetaArgs) {
-  return [
-    { title: "Vocab-It | Vocabulary" },
-    { name: "description", content: "Vocabulary page" },
-  ];
-}
-
-export default function Vocab({
-  params,
-}: Route.ComponentProps) {
+export default function Vocab() {
+  let params = useParams();
   const { vocabs } = useVocabStore(state => state);
   const [currVocab, setCurrVocab] = useState<VocabLocal>();
   const { words } = useWordStore(state => state);

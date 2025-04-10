@@ -5,9 +5,8 @@ import type { Answer, VocabLocal, WordLocal } from '@/lib/types';
 import { useVocabStore } from '@/lib/vocabStore';
 import { useWordStore } from '@/lib/wordStore';
 import useSound from 'use-sound';
-import type { Route } from '../+types/root';
 import LessonResult from '@/components/LessonResult';
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import HintButton from '@/components/HintButton';
@@ -27,16 +26,8 @@ function randomizeWords(array: WordLocal[], volume: number): WordLocal[] {
   return randomizedWords;
 }
 
-export function meta({ }: Route.MetaArgs) {
-  return [
-    { title: "Vocab-It | Lesson" },
-    { name: "description", content: "Lesson page" },
-  ];
-}
-
-export default function Lesson({
-  params,
-}: Route.ComponentProps) {
+export default function Lesson() {
+  let params = useParams();
   const [lessonVolume, setLessonVolume] = useState<number>(0);
   const [currWord, setCurrWord] = useState<number>(initialWordIdx);
   const [currVocabWords, setCurrVocabWords] = useState<WordLocal[]>([]);
