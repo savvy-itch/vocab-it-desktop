@@ -9,7 +9,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { redirect } from "react-router";
+import { Link } from "react-router";
 
 export default function EndLessonDialog() {
   return (
@@ -29,10 +29,11 @@ export default function EndLessonDialog() {
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
-            className="font-semibold bg-btn-bg dark:bg-btn-bg hover:bg-hover-btn-bg dark:hover:bg-hover-btn-bg text-white dark:text-white hover:text-white border dark:border-white"
-            onClick={() => redirect('/')}
+            className="font-semibold bg-btn-bg dark:bg-btn-bg hover:bg-hover-btn-bg dark:hover:bg-hover-btn-bg text-white dark:text-white hover:text-white border dark:border-white px-0 py-0"
           >
-            OK
+            <Link to={'/'} className="px-5 py-2">
+              Ok
+            </Link>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

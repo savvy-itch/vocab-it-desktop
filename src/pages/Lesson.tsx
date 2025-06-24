@@ -73,9 +73,12 @@ export default function Lesson() {
   }
 
   function handleSpecialKeyClick(key: string) {
-    setAnswer((prev: string) => prev + (isUpperCase ? key.toUpperCase() : key))
-    inputRef.current && inputRef.current.focus();
-    setIsUpperCase(false);
+    if (inputRef.current) {
+      const cursorPos = inputRef.current.selectionStart ?? 0;
+      setAnswer((prev: string) => prev.substring(0, cursorPos) + (isUpperCase ? key.toUpperCase() : key) + prev.substring(cursorPos));
+      inputRef.current.focus();
+      setIsUpperCase(false);
+    }
   }
 
   function handleUppercaseToggle() {
