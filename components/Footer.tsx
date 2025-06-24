@@ -10,7 +10,6 @@ export default function Footer() {
         <div>
           <p className="text-xl text-center mobile:text-left">Vocab-It</p>
           <p className="text-center mobile:text-left">A web app for learning languages</p>
-          <p className="text-center mobile:text-left text-sm mt-2">Developed by Michael Savych</p>
         </div>
         <div>
           <h2 className="text-xl font-semibold mb-2">References</h2>

@@ -46,6 +46,14 @@ export default function Vocab() {
     return true;
   }
 
+  function calcWordsProgress(): number {
+    if (currWords.length === 0) {
+      return 0;
+    }
+    const totalRate: number = currWords.reduce((acc, val) => acc + val.progress, 0 );
+    return Math.round(totalRate / currWords.length);
+  }
+
   useEffect(() => {
     setIsLoading(true);
     const existingVocab = vocabs.find(v => v._id === params.vocabId);
@@ -55,7 +63,7 @@ export default function Vocab() {
       existingVocab.wordIds.forEach(id => {
         existingWords.push(words[id]);
       });
-      existingWords = existingWords.filter(Boolean);
+      existingWords = existingWords.filter(Boolean).sort();
       setCurrWords(existingWords);
     }
     setIsLoading(false);
@@ -105,6 +113,7 @@ export default function Vocab() {
             {currWords.length === 1 ? '1 word' : `${currWords.length} words`}
           </p>
         </div>
+        <p className="mobile:text-lg mx-auto m">Correctness rate: <span className="font-bold">{calcWordsProgress()}%</span></p>
         {currVocab && <SelectLang vocab={currVocab} />}
         <div className="my-5 flex justify-between items-center">
           {(currWords.length > 0 && params.vocabId) ? (

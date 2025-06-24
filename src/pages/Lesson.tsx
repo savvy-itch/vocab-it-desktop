@@ -192,7 +192,10 @@ export default function Lesson() {
             <div className="flex justify-between">
               <h2 className="text-xl mobile:text-2xl">Enter translation:</h2>
               {(!isLoading && lessonWords[currWord - 1]) ? (
-                <HintButton word={lessonWords[currWord - 1].word} />
+                <div className="flex gap-3">
+                  <HintButton word={lessonWords[currWord - 1].word} hintType="letter" />
+                  <HintButton word={lessonWords[currWord - 1].word} hintType="word" />
+                </div>
               ) : (
                 <Skeleton className="w-[38px] h-[38px] rounded-sm" />
               )}
