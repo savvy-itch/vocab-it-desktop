@@ -13,10 +13,11 @@ import { useVocabStore } from '@/lib/vocabStore';
 type SingleWordProps = {
   word: WordLocal,
   vocab: VocabLocal,
-  checkSingleEdit: CheckSingleEditFunction
+  checkSingleEdit: CheckSingleEditFunction,
+  isLastWord: boolean
 }
 
-export default function SingleWord({ word, vocab, checkSingleEdit }: SingleWordProps) {
+export default function SingleWord({ word, vocab, checkSingleEdit, isLastWord }: SingleWordProps) {
   const [isEditSingleWord, setIsEditSingleWord] = useState<boolean>(false);
   const [newWord, setNewWord] = useState<string>(word.word);
   const [newTranslation, setNewTranslation] = useState<string>(word.translation);
@@ -158,7 +159,7 @@ export default function SingleWord({ word, vocab, checkSingleEdit }: SingleWordP
         </div>
       )}
       {/* separator */}
-      {vocab.wordIds[vocab.wordIds.length - 1] !== word._id && <div className="h-px w-full dark:bg-main-bg-dark" />}
+      {!isLastWord && <div className="h-px w-full dark:bg-main-bg-dark" />}
     </article>
   )
 }

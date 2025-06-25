@@ -21,7 +21,7 @@ npm run build
 To start the built version of the web app, run:
 
 ```
-npm run start
+npm run preview
 ```
 
 To start the Electron verion of the built app, run:

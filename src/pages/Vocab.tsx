@@ -63,7 +63,7 @@ export default function Vocab() {
       existingVocab.wordIds.forEach(id => {
         existingWords.push(words[id]);
       });
-      existingWords = existingWords.filter(Boolean).sort();
+      existingWords = existingWords.filter(Boolean).sort((a, b) => a.word.localeCompare(b.word));
       setCurrWords(existingWords);
     }
     setIsLoading(false);
@@ -149,13 +149,14 @@ export default function Vocab() {
             : (
               currWords.length > 0 ? (
                 <ScrollArea className="h-[250px] rounded-md border px-2 sm:px-4 py-3 overflow-y-auto">
-                  {currWords.map(w => {
+                  {currWords.map((w, i) => {
                     return (
                       <SingleWord
                         key={w._id}
                         word={w}
                         vocab={currVocab as VocabLocal}
                         checkSingleEdit={checkSingleEdit}
+                        isLastWord={i === currWords.length - 1}
                       />
                     )
                   })}
