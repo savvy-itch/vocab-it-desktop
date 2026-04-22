@@ -1,5 +1,5 @@
 import { useVocabStore } from '@/lib/vocabStore';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import type { VocabLocal, WordLocal } from '@/lib/types';
 import { useWordStore } from '@/lib/wordStore';
 import useProfileStore from '@/lib/profileStore';
@@ -10,34 +10,34 @@ import { Skeleton } from '@/components/ui/skeleton';
 import SelectLang from '@/components/SelectLang';
 import DeleteVocabBtn from '@/components/DeleteVocabBtn';
 import DeleteWordsBtn from '@/components/DeleteWordsBtn';
-import WordListSkeleton from '@/components/skeletons/WordListSkeleton';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import SingleWord from '@/components/SingleWord';
 import VocabAddWordForm from '@/components/VocabAddWordForm';
 import { Toaster } from '@/components/ui/toaster';
 import Footer from '@/components/Footer';
+import { FaShuffle } from 'react-icons/fa6';
+import { MdOutlineTranslate } from "react-icons/md";
 
 export default function Vocab() {
-  let params = useParams();
+  const params = useParams();
   const { vocabs } = useVocabStore(state => state);
-  const [currVocab, setCurrVocab] = useState<VocabLocal>();
   const { words } = useWordStore(state => state);
-  const [currWords, setCurrWords] = useState<WordLocal[]>([]);
   const {
-    isEditUsername,
-    isEditWordAmount,
-    isAddVocab,
     isAddWord,
     isEditWord,
     isEditVocabTitle,
-    toggleIsEditUsername,
-    toggleIsEditWordAmount,
-    toggleIsAddVocab,
-    toggleIsAddWord,
-    toggleIsEditWord,
-    toggleIsEditVocabTitle
+    resetEditModes
   } = useProfileStore(state => state);
-  const [isLoading, setIsLoading] = useState(false);
+
+  // get words for current vocabulary
+  const currVocab = vocabs.find(v => v._id === params.vocabId);
+  let currWords: WordLocal[] = [];
+  if (currVocab) {
+    currVocab.wordIds.forEach(id => {
+      currWords.push(words[id]);
+    });
+    currWords = currWords.filter(Boolean).sort((a, b) => a.word.localeCompare(b.word));
+  }
 
   function checkSingleEdit() {
     if (isAddWord || isEditWord || isEditVocabTitle) {
@@ -50,42 +50,13 @@ export default function Vocab() {
     if (currWords.length === 0) {
       return 0;
     }
-    const totalRate: number = currWords.reduce((acc, val) => acc + val.progress, 0 );
+    const totalRate: number = currWords.reduce((acc, val) => acc + val.progress, 0);
     return Math.round(totalRate / currWords.length);
   }
 
   useEffect(() => {
-    setIsLoading(true);
-    const existingVocab = vocabs.find(v => v._id === params.vocabId);
-    if (existingVocab) {
-      setCurrVocab(existingVocab);
-      let existingWords: WordLocal[] = [];
-      existingVocab.wordIds.forEach(id => {
-        existingWords.push(words[id]);
-      });
-      existingWords = existingWords.filter(Boolean).sort((a, b) => a.word.localeCompare(b.word));
-      setCurrWords(existingWords);
-    }
-    setIsLoading(false);
-  }, [params.vocabId, words, vocabs]);
-
-  useEffect(() => {
-    // reset all active edit modes 
-    switch (true) {
-      case isEditUsername:
-        toggleIsEditUsername();
-      case isEditWordAmount:
-        toggleIsEditWordAmount();
-      case isAddVocab:
-        toggleIsAddVocab();
-      case isAddWord:
-        toggleIsAddWord();
-      case isEditWord:
-        toggleIsEditWord();
-      case isEditVocabTitle:
-        toggleIsEditVocabTitle();
-    }
-  }, []);
+    resetEditModes();
+  }, [resetEditModes]);
 
   return (
     <>
@@ -97,7 +68,7 @@ export default function Vocab() {
           >
             <HiArrowLongLeft /> Profile
           </Link>
-          {!isLoading && currVocab ? (
+          {currVocab ? (
             <VocabTitleSection
               id={currVocab._id}
               vocabTitle={currVocab.title}
@@ -114,20 +85,34 @@ export default function Vocab() {
           </p>
         </div>
         <p className="mobile:text-lg mx-auto m">Correctness rate: <span className="font-bold">{calcWordsProgress()}%</span></p>
-        {currVocab && <SelectLang vocab={currVocab} />}
+        {currVocab && <SelectLang vocabLang={currVocab.lang} vocabId={currVocab._id} />}
         <div className="my-5 flex justify-between items-center">
           {(currWords.length > 0 && params.vocabId) ? (
-            <Link
-              className="text-white rounded-lg py-2 px-3 font-semibold bg-btn-bg hover:bg-hover-btn-bg focus:bg-hover-btn-bg transition-colors"
-              to={`/lesson/${params.vocabId}`}>
-              Start Lesson
-            </Link>
+            <div className="flex flex-col gap-4">
+              <Link
+                className="text-white rounded-lg py-2 px-3 flex gap-1 items-center font-semibold bg-btn-bg hover:bg-hover-btn-bg focus:bg-hover-btn-bg hover:scale-105 transition-all"
+                to={`/lesson/${params.vocabId}`}>
+                <MdOutlineTranslate /> <span>Flash Cards</span>
+              </Link>
+              <Link
+                className="text-white rounded-lg py-2 px-3 flex gap-1 items-center font-semibold bg-btn-bg hover:bg-hover-btn-bg focus:bg-hover-btn-bg hover:scale-105 transition-all"
+                to={`/lesson/pairs/${params.vocabId}`}>
+                <FaShuffle /> <span>Find a Pair</span>
+              </Link>
+            </div>
           ) : (
-            <p
-              className="rounded-lg py-2 px-3 font-semibold bg-btn-bg disabled:bg-btn-bg/80 disabled:text-zinc-300 cursor-default transition-colors"
-            >
-              Start Lesson
-            </p>
+            <>
+              <p
+                className="rounded-lg py-2 px-3 font-semibold bg-btn-bg disabled:bg-btn-bg/80 disabled:text-zinc-300 cursor-default transition-colors"
+              >
+                Start Lesson
+              </p>
+              <p
+                className="rounded-lg py-2 px-3 font-semibold bg-btn-bg disabled:bg-btn-bg/80 disabled:text-zinc-300 cursor-default transition-colors"
+              >
+                Find a Pair
+              </p>
+            </>
           )}
           <div className="flex flex-col gap-4">
             {currVocab && (
@@ -144,29 +129,25 @@ export default function Vocab() {
             <p className="text-sm sm:text-base font-bold">Translation</p>
             <p className="text-sm sm:text-base font-bold">Progress</p>
           </div>
-          {isLoading
-            ? <WordListSkeleton />
-            : (
-              currWords.length > 0 ? (
-                <ScrollArea className="h-[250px] rounded-md border px-2 sm:px-4 py-3 overflow-y-auto">
-                  {currWords.map((w, i) => {
-                    return (
-                      <SingleWord
-                        key={w._id}
-                        word={w}
-                        vocab={currVocab as VocabLocal}
-                        checkSingleEdit={checkSingleEdit}
-                        isLastWord={i === currWords.length - 1}
-                      />
-                    )
-                  })}
-                </ScrollArea>
-              ) : (
-                <div className="h-[250px] flex justify-center items-center rounded-md border">
-                  <p className="text-xl font-bold">No words</p>
-                </div>
-              )
-            )
+          {currWords.length > 0 ? (
+            <ScrollArea className="h-62.5 rounded-md border px-2 sm:px-4 py-3">
+              {currWords.map((w, i) => {
+                return (
+                  <SingleWord
+                    key={w._id}
+                    word={w}
+                    vocab={currVocab as VocabLocal}
+                    checkSingleEdit={checkSingleEdit}
+                    isLastWord={i === currWords.length - 1}
+                  />
+                )
+              })}
+            </ScrollArea>
+          ) : (
+            <div className="h-62.5 flex justify-center items-center rounded-md border">
+              <p className="text-xl font-bold">No words</p>
+            </div>
+          )
           }
         </section>
         {currVocab && <VocabAddWordForm vocabWords={currVocab.wordIds} vocabId={currVocab._id} checkSingleEdit={checkSingleEdit} />}

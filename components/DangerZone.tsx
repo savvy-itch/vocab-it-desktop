@@ -18,7 +18,7 @@ export default function DangerZone() {
 
   async function handleAccountDelete() {
     clearProfileData();
-    displayPopup({ isError: false, msg: "Your account has been deleted" });
+    displayPopup({ isError: false, msg: "Your data has been deleted" });
   }
 
   return (

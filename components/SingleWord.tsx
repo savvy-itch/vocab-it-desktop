@@ -79,7 +79,6 @@ export default function SingleWord({ word, vocab, checkSingleEdit, isLastWord }:
     deleteWordId(vocab._id, word._id);
   }
 
-
   useEffect(() => {
     if (word.trained) {
       // check explicitly for the type because while word.progress: 0 is falsy to TS, it's a valid value for the logic

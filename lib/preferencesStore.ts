@@ -1,17 +1,20 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { INITIAL_AMOUNT } from "./globals";
 
-const INITIAL_AMOUNT: number = 3;
+const DEFAULT_ROUNDS: number = 5;
 
 interface PreferenceStore {
   storedUsername: string,
   lessonVolume: number,
   soundOn: boolean,
   wordsPerLesson: number,
+  rounds: number,
   setStoredUsername: (username: string) => void,
   updateLessonVolume: (newVolume: number) => void,
   toggleSoundOn: () => void,
-  setWordsPerLesson: (n: number) => void
+  setWordsPerLesson: (n: number) => void,
+  updateRounds: (n: number) => void,
   clearProfileData: () => void
 }
 
@@ -22,10 +25,12 @@ export const usePreferencesStore = create<PreferenceStore>()(
       lessonVolume: INITIAL_AMOUNT,
       soundOn: true,
       wordsPerLesson: 20,
+      rounds: DEFAULT_ROUNDS,
       setStoredUsername: (username: string) => set({ storedUsername: username }),
       updateLessonVolume: (newVolume: number) => set({ lessonVolume: newVolume }),
       toggleSoundOn: () => set((state: PreferenceStore) => ({ soundOn: !state.soundOn })),
       setWordsPerLesson: (n) => set({ wordsPerLesson: n }),
+      updateRounds: (n: number) => set({ rounds: n }),
       clearProfileData: () => {
         localStorage.removeItem('vocab-preferences');
         localStorage.removeItem('vocabs');
@@ -35,6 +40,7 @@ export const usePreferencesStore = create<PreferenceStore>()(
           lessonVolume: INITIAL_AMOUNT,
           soundOn: true,
           wordsPerLesson: 20,
+          rounds: DEFAULT_ROUNDS
         });
       }
     }),

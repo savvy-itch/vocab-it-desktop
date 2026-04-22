@@ -9,9 +9,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { memo } from "react";
 import { Link } from "react-router";
 
-export default function EndLessonDialog() {
+const EndLessonDialog = memo(function EndLessonDialog() {
   return (
     <AlertDialog>
       <AlertDialogTrigger className="w-16 text-sm mobile:text-base mobile:w-28 flex items-center justify-center rounded-lg py-2 font-semibold text-white bg-secondary-bg-light hover:bg-hover-secondary-bg hover:cursor-pointer transition-colors">
@@ -39,4 +40,6 @@ export default function EndLessonDialog() {
       </AlertDialogContent>
     </AlertDialog>
   )
-}
+});
+
+export default EndLessonDialog;

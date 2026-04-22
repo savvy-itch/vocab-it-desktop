@@ -5,6 +5,7 @@ import '../styles/globals.css';
 import Vocab from './pages/Vocab';
 import Lesson from './pages/Lesson';
 import NotFound from './pages/NotFound';
+import Pairs from './pages/Pairs';
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route path='vocabularies/:vocabId' element={<Vocab />} />
         <Route path='lesson/:vocabId' element={<Lesson />} />
+        <Route path='lesson/pairs/:vocabId' element={<Pairs />} />
         <Route path='/' element={<Home />} />
         <Route path='*' element={<NotFound />} />
       </Route>

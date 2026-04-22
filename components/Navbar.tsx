@@ -9,11 +9,11 @@ import {
   MenubarMenu,
   MenubarSeparator,
   MenubarTrigger,
-} from "components/ui/menubar";
+} from "@/components/ui/menubar";
 import NewVocabDialog from './NewVocabDialog';
-import { Dialog, DialogTrigger } from "components/ui/dialog";
-import { useVocabStore } from 'lib/vocabStore';
-import type { VocabLocal } from 'lib/types';
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { useVocabStore } from '@/lib/vocabStore';
+import type { VocabLocal } from '@/lib/types';
 import { Link } from 'react-router';
 import SoundToggle from './SoundToggle';
 

@@ -5,19 +5,16 @@ import { useStore } from 'zustand';
 import { usePreferencesStore } from '@/lib/preferencesStore';
 import useSound from 'use-sound';
 import { SOUND_VOLUME, errorSound } from '@/lib/globals';
-import { Button } from '@/components/ui/button';
 import { HiPencilSquare } from "react-icons/hi2";
 import useDisplayPopup from '@/hooks/useDisplayPopup';
-import { Skeleton } from './ui/skeleton';
 
 export default function ProfileUsernameSection({ checkSingleEdit }: { checkSingleEdit: CheckSingleEditFunction }) {
-  const { storedUsername, setStoredUsername, soundOn } = useStore(usePreferencesStore, (state) => state);
+ const { storedUsername, setStoredUsername, soundOn } = useStore(usePreferencesStore, (state) => state);
   const { isEditUsername, toggleIsEditUsername } = useProfileStore(state => state);
   const [usernameInput, setUsernameInput] = useState<string>(storedUsername);
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [playError] = useSound(errorSound, { volume: SOUND_VOLUME });
   const { displayPopup } = useDisplayPopup();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function updateUsername(e: React.SyntheticEvent) {
     e.preventDefault();
@@ -46,19 +43,13 @@ export default function ProfileUsernameSection({ checkSingleEdit }: { checkSingl
 
   function checkForAbort(e: React.KeyboardEvent) {
     if (e.key === "Escape") {
-      setUsernameInput(storedUsername);
-      toggleIsEditUsername();
+      cancelEditUsername();
     }
   }
 
-  if (isLoading) {
-    return (
-      <div>
-        <h2 className='text-xl mobile:text-2xl font-bold dark:text-custom-text-dark mb-4'>Username</h2>
-        <Skeleton className="my-3 w-32 h-[38px] sm:w-2/12" />
-        <div className="h-px w-full dark:bg-main-bg-dark mt-3 mb-5" />
-      </div>
-    )
+  function cancelEditUsername() {
+    setUsernameInput(storedUsername);
+    toggleIsEditUsername();
   }
 
   return (
@@ -82,21 +73,29 @@ export default function ProfileUsernameSection({ checkSingleEdit }: { checkSingl
                 autoFocus
                 onFocus={() => setErrorMsg('')}
                 data-testid="username-input"
+                placeholder="Username"
               />
             </div>
-            <Button
-              className="bg-gray-500 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600 text-white dark:text-white hover:cursor-pointer"
+            <button
+              className="rounded px-2 py-1 bg-gray-500 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600 text-white dark:text-white hover:cursor-pointer"
               onSubmit={updateUsername}
               aria-label='submit'
             >
               Save
-            </Button>
+            </button>
+            <button
+              className="rounded px-2 py-1 bg-white mobile:bg-secondary-bg-light mobile:hover:bg-secondary-bg-light/80 mobile:focus:bg-secondary-bg-light/80 mobile:text-white cursor-pointer mobile:px-3 mobile:py-1 mobile:rounded-sm"
+              aria-label="cancel"
+              onClick={cancelEditUsername}
+            >
+              Cancel
+            </button>
           </form>
           <p className="text-sm text-red-800 min-h-4">{errorMsg}</p>
         </>
       ) : (
         <div className="flex gap-2 my-3 w-fit justify-between items-center">
-          <p className="text-lg leading-[38px] dark:text-custom-text-dark">
+          <p className="text-lg leading-9.5 dark:text-custom-text-dark">
             {storedUsername}
           </p>
           <button

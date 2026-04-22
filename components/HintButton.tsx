@@ -21,7 +21,7 @@ export default function HintButton({ word, hintType }: HintProps) {
       <PopoverContent className="py-2 dark:border-custom-highlight dark:bg-main-bg-dark">
         {hintType === 'word'
         ? word
-        : word[0] + word.substring(1).replaceAll(/./g, '•')
+        : word[0] + word.substring(1).replaceAll(/\S/g, '•')
         }
       </PopoverContent>
     </Popover>

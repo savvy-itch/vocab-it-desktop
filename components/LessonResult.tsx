@@ -12,14 +12,14 @@ import {
 
 type ResultProps = {
   allAnswers: Answer[],
-  words: WordLocal[],
+  wordsLen: number,
 }
 
-export default function LessonResult({allAnswers, words}: ResultProps) {
+export default function LessonResult({allAnswers, wordsLen}: ResultProps) {
   const wrongAnswers: Answer[] = allAnswers.filter(a => a.userAnswer !== a.word);
   const answeredCorrectly = allAnswers.length - wrongAnswers.length;
 
-  const successPercentage = Math.round((answeredCorrectly / words.length) * 100);
+  const successPercentage = Math.round((answeredCorrectly / wordsLen) * 100);
 
   return (
     <section className="w-full p-4 sm:p-8 rounded-xl bg-white text-custom-text-light dark:text-custom-text-dark dark:bg-custom-highlight text-center shadow-2xl">
@@ -29,7 +29,7 @@ export default function LessonResult({allAnswers, words}: ResultProps) {
         <span 
           className={`${successPercentage > 33 ? successPercentage > 67 ? 'text-green-600' : 'text-orange-500' : 'text-red-500'} font-semibold`}
         >
-          {answeredCorrectly}/{words.length}
+          {answeredCorrectly}/{wordsLen}
         </span> words
       </p>
       {wrongAnswers.length > 0 && (
@@ -40,7 +40,7 @@ export default function LessonResult({allAnswers, words}: ResultProps) {
               <Table className="text-lg">
                 <TableHeader>
                   <TableRow className="text-sm mobile:text-base">
-                    <TableHead className="w-[100px] px-2 mobile:px-4">Word</TableHead>
+                    <TableHead className="w-25 px-2 mobile:px-4">Word</TableHead>
                     <TableHead className="px-2 mobile:px-4">Your Translation</TableHead>
                     <TableHead className=" px-2 mobile:px-4">Correct Translation</TableHead>
                   </TableRow>

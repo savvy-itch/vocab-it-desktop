@@ -17,13 +17,9 @@ export default function CustomTooltip({text}: {text: string}) {
 
   useEffect(() => {
     const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-    if (hasTouchScreen) {
-      setIsTouchScreen(true);
-    } else {
-      setIsTouchScreen(false);
-    }
-  }, [])
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsTouchScreen(hasTouchScreen);
+  }, []);
 
   if (isTouchScreen) {
     return (

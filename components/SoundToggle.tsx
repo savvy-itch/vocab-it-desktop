@@ -1,10 +1,10 @@
 import React from 'react'
-import { usePreferencesStore } from 'lib/preferencesStore';
+import { usePreferencesStore } from '@/lib/preferencesStore';
 import useSound from 'use-sound';
-import { SOUND_VOLUME, muteSound, unmuteSound } from 'lib/globals';
+import { SOUND_VOLUME, muteSound, unmuteSound } from '@/lib/globals';
 import { useStore } from 'zustand';
 
-import { MenubarMenu } from "components/ui/menubar";
+import { MenubarMenu } from "@/components/ui/menubar";
 import { HiSpeakerXMark, HiSpeakerWave } from "react-icons/hi2";
 
 export default function SoundToggle() {

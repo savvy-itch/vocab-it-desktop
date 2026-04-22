@@ -2,7 +2,7 @@ import useProfileStore from "@/lib/profileStore";
 import { useEffect } from "react";
 import ProfileUsernameSection from "@/components/ProfileUsernameSection";
 import ProfileAddVocabSection from "@/components/ProfileAddVocabSection";
-import ProfileWordSection from "@/components/ProfileWordSection";
+import ProfileSettingsSection from "@/components/ProfileSettingsSection";
 import DangerZone from "@/components/DangerZone";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/Footer";
@@ -13,10 +13,7 @@ export default function Home() {
     isEditWordAmount,
     isAddVocab,
     isEditVocabTitle,
-    toggleIsEditUsername,
-    toggleIsEditWordAmount,
-    toggleIsAddVocab,
-    toggleIsEditVocabTitle
+    resetEditModes
   } = useProfileStore(state => state);
 
   // only allow one field editing at a time
@@ -28,18 +25,8 @@ export default function Home() {
   }
 
   useEffect(() => {
-    // reset all active edit modes 
-    switch (true) {
-      case isEditUsername:
-        toggleIsEditUsername();
-      case isEditWordAmount:
-        toggleIsEditWordAmount();
-      case isAddVocab:
-        toggleIsAddVocab();
-      case isEditVocabTitle:
-        toggleIsEditVocabTitle();
-    }
-  }, []);
+    resetEditModes();
+  }, [resetEditModes]);
 
   return (
     <>
@@ -47,7 +34,7 @@ export default function Home() {
         <h1 className='text-2xl mobile:text-3xl md:text-3xl text-center font-semibold dark:text-custom-text-dark mb-4'>Profile</h1>
         <ProfileUsernameSection checkSingleEdit={checkSingleEdit} />
         <ProfileAddVocabSection checkSingleEdit={checkSingleEdit} />
-        <ProfileWordSection checkSingleEdit={checkSingleEdit} />
+        <ProfileSettingsSection checkSingleEdit={checkSingleEdit} />
         <DangerZone />
       </section>
       <Toaster />

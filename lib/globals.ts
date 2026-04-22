@@ -1,4 +1,4 @@
-const INITIAL_NUMBER: number = 3;
+const INITIAL_AMOUNT: number = 3;
 const MAX_WORDS = 100;
 const SOUND_VOLUME = 0.25;
 
@@ -14,13 +14,13 @@ const muteSound = './audio/mute.mp3';
 const unmuteSound = './audio/unmute.mp3';
 
 const specialSymbols = {
-  FRA: ['à', 'â', 'é', 'è', 'ê', 'ç', 'î', 'ô', 'ù', 'ë', 'ï', 'œ', 'æ'],
+  FRA: ['à', 'â', 'é', 'è', 'ê', 'ç', 'î', 'ô', 'ù', 'û', 'ë', 'ï', 'œ', 'æ'],
   GER: ['ä', 'ö', 'ü', 'ß', 'é'],
   SPA: ['á', 'é', 'í', 'ó', 'ú', 'ü', 'ñ', '¿', '¡']
 }
 
 export {
-  INITIAL_NUMBER, 
+  INITIAL_AMOUNT, 
   MAX_WORDS,
   SOUND_VOLUME,
   USERNAME_MIN_LENGTH,

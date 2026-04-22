@@ -1,16 +1,16 @@
 import { specialSymbols } from '@/lib/globals'
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useDisplayPopup from '@/hooks/useDisplayPopup';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from './ui/select';
 import CustomTooltip from './CustomTooltip';
 import { useVocabStore } from '@/lib/vocabStore';
 import type { LangCodes, VocabLocal } from '@/lib/types';
 
-export default function SelectLang({ vocab }: { vocab: VocabLocal}) {
+export default function SelectLang({ vocabLang, vocabId }: { vocabLang: LangCodes | undefined, vocabId: string }) {
   const { setLang } = useVocabStore(state => state);
   const { displayPopup } = useDisplayPopup();
   const [isUpdating, setIsUpdating] = useState(false);
-  const [selectedLang, setSelectedLang] = useState<LangCodes>();
+  const [selectedLang, setSelectedLang] = useState<LangCodes>(vocabLang ?? "default");
 
   function handleLangChange(updatedLang: LangCodes) {
     if (updatedLang !== selectedLang) {
@@ -18,18 +18,12 @@ export default function SelectLang({ vocab }: { vocab: VocabLocal}) {
 
       if (updatedLang === 'default' || Object.keys(specialSymbols).includes(updatedLang)) {
         setIsUpdating(true);
-        setLang(vocab._id, updatedLang);
+        setLang(vocabId, updatedLang);
         displayPopup({ isError: false, msg: "Language has been updated" });
         setIsUpdating(false);
       }
     }
   };
-
-  useEffect(() => {
-    if (vocab.lang) {
-      setSelectedLang(vocab.lang)
-    }
-  }, []);
 
   return (
     <section className="w-full flex items-start mx-auto gap-2 my-3">

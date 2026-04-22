@@ -1,5 +1,5 @@
 import { HiOutlineExternalLink } from "react-icons/hi";
-import { version } from 'package.json';
+import { version } from '../package.json';
 
 export default function Footer() {
   return (
@@ -10,6 +10,7 @@ export default function Footer() {
         <div>
           <p className="text-xl text-center mobile:text-left">Vocab-It</p>
           <p className="text-center mobile:text-left">A web app for learning languages</p>
+          <p className="text-center mobile:text-left text-sm mt-2">Developed by Michael Savych</p>
         </div>
         <div>
           <h2 className="text-xl font-semibold mb-2">References</h2>
@@ -27,14 +28,14 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a className="flex items-center gap-1 hover:text-white focus:text-white transition-colors" href="https://www.linkedin.com/in/михайло-савич-a31366248/">
+              <a className="flex items-center gap-1 hover:text-white focus:text-white transition-colors" href="www.linkedin.com/in/mykhailo-savych-a31366248">
                 LinkedIn <HiOutlineExternalLink />
               </a>
             </li>
           </ul>
         </div>
       </div>
-      <p className="text-sm mt-5 text-center">©2025 Vocab-It v{version}. Developed by Michael Savych. MIT Licensed.</p>
+      <p className="text-sm mt-5 text-center">©2026 Vocab-It v{version}. Developed by Michael Savych. MIT Licensed.</p>
     </footer>
   )
 }

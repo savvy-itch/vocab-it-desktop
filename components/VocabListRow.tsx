@@ -17,6 +17,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { SOUND_VOLUME, errorSound } from '@/lib/globals';
 import useDisplayPopup from '@/hooks/useDisplayPopup';
 import { useVocabStore } from '@/lib/vocabStore';
@@ -96,7 +103,7 @@ export default function VocabListRow({ vocab }: { vocab: VocabLocal }) {
         toggleIsEditVocabTitle();
       }
     }
-  }, [isEditTitle])
+  }, [isEditTitle, isEditVocabTitle, toggleIsEditVocabTitle])
 
   return (
     <article>
@@ -150,14 +157,32 @@ export default function VocabListRow({ vocab }: { vocab: VocabLocal }) {
             <p className="w-10 text-center">{vocab.wordIds ? vocab.wordIds.length : 0}</p>
             <div className="grow flex gap-1 justify-around">
               {vocab.wordIds.length > 0 ? (
-                <Link
-                  className="text-white text-sm sm:text-lg rounded-sm bg-btn-bg hover:bg-hover-btn-bg transition-colors py-1 px-3"
-                  to={`/lesson/${vocab._id}`}
-                >
-                  Start <span className="hidden sm:inline">Lesson</span>
-                </Link>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="border py-1 px-2 rounded hover:cursor-pointer hover:bg-custom-highlight2 hover:text-white transition-colors">Lessons</button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="dark:bg-main-bg-dark border-custom-highlight">
+                    <DropdownMenuItem className="text-shadow-custom-text-light dark:hover:bg-custom-highlight">
+                      <Link
+                        className="dark:text-white text-base w-full"
+                        to={`/lesson/${vocab._id}`}
+                      >
+                        Flash Cards
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="dark:bg-custom-highlight" />
+                    <DropdownMenuItem className="text-shadow-custom-text-light dark:hover:bg-custom-highlight">
+                      <Link
+                        className="dark:text-white text-base w-full"
+                        to={`/lesson/pairs/${vocab._id}`}
+                      >
+                        Find a Pair
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               ) : (
-                <p className="text-sm sm:text-lg rounded-sm bg-btn-bg hover:bg-hover-btn-bg transition-colors py-1 px-3 text-gray-300">Start <span className="hidden sm:inline">Lesson</span></p>
+                <p className="py-1 px-2 rounded-sm border border-gray-400 text-gray-300">Lessons</p>
               )}
               <div className="flex gap-4">
                 <button className="text-lg hover:cursor-pointer" aria-label="edit" onClick={enterEditTitleMode}><HiPencilSquare /></button>

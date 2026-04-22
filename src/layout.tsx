@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@/components/theme-provider'
 import TitleBar from '@/components/TitleBar'
-import Navbar from 'components/Navbar'
+import Navbar from '@/components/Navbar'
 import { Outlet } from 'react-router'
 
 export default function Layout() {

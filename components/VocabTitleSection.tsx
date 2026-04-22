@@ -5,7 +5,6 @@ import { usePreferencesStore } from '@/lib/preferencesStore';
 import useSound from 'use-sound';
 import { SOUND_VOLUME, errorSound } from '@/lib/globals';
 import useProfileStore from '@/lib/profileStore';
-import { Button } from '@/components/ui/button';
 import { HiPencilSquare } from "react-icons/hi2";
 import useDisplayPopup from '@/hooks/useDisplayPopup';
 import { useVocabStore } from '@/lib/vocabStore';
@@ -70,12 +69,12 @@ export default function VocabTitleSection({ id, vocabTitle, checkSingleEdit }: {
               onChange={(e) => setTitle(e.target.value)}
               autoFocus
             />
-            <Button
+            <button
               className="bg-gray-500 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600 text-white dark:text-white"
               onSubmit={updateTitle}
             >
               Save
-            </Button>
+            </button>
           </div>
         </form>
         <p className="text-sm text-red-800 min-h-4">{errorMsg}</p>

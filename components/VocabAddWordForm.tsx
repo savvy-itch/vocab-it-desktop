@@ -8,10 +8,11 @@ import { useStore } from 'zustand';
 import { Label } from '@/components/ui/label';
 import { HiPlus } from "react-icons/hi2";
 import FileForm from './FileForm';
-import useDisplayPopup from '@/hooks/useDisplayPopup';
 import { useVocabStore } from '@/lib/vocabStore';
 import { useWordStore } from '@/lib/wordStore';
 import { nanoid } from 'nanoid';
+
+const INPUT_MAX_LEN = 40;
 
 export default function VocabAddWordForm({ vocabWords, vocabId, checkSingleEdit }: {
   vocabWords: string[],
@@ -27,7 +28,6 @@ export default function VocabAddWordForm({ vocabWords, vocabId, checkSingleEdit 
   const { addWord } = useWordStore(state => state);
   const { addWordId } = useVocabStore(state => state);
   const [playError] = useSound(errorSound, { volume: SOUND_VOLUME });
-  const { displayPopup } = useDisplayPopup();
 
   function enterAddWordMode() {
     const isOnlyEdit: boolean = checkSingleEdit();
@@ -102,7 +102,7 @@ export default function VocabAddWordForm({ vocabWords, vocabId, checkSingleEdit 
                 onChange={(e) => setNewWord(e.target.value)}
                 onKeyDown={checkForAbort}
                 size={15}
-                maxLength={30}
+                maxLength={INPUT_MAX_LEN}
                 placeholder="Enter word"
                 autoFocus
               />
@@ -115,7 +115,7 @@ export default function VocabAddWordForm({ vocabWords, vocabId, checkSingleEdit 
                 onChange={(e) => setTranslation(e.target.value)}
                 onKeyDown={checkForAbort}
                 size={15}
-                maxLength={30}
+                maxLength={INPUT_MAX_LEN}
                 placeholder="Enter translation"
               />
             </div>
