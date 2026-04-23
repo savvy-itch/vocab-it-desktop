@@ -227,7 +227,7 @@ export default function Pairs() {
                   <button
                     key={`w-${lessonWords[idx]._id}`}
                     onClick={() => handleBtnClick(lessonWords[idx]._id, lessonWords[idx].word, lessonWords[idx].translation, false)}
-                    className={`${hiddenPairs.has(lessonWords[idx]._id) ? "opacity-0 transition-opacity" : "text-center rounded-lg text-white bg-btn-bg hover:bg-hover-btn-bg hover:cursor-pointer focus:bg-hover-btn-bg disabled:bg-btn-bg/40 border-zinc-400 transition-colors"} p-3 mobile:px-4 text-sm mobile:text-base font-semibold border transition`}
+                    className={`${hiddenPairs.has(lessonWords[idx]._id) ? "opacity-0 transition-opacity" : "text-center rounded-lg text-white bg-btn-bg hover:bg-hover-btn-bg hover:cursor-pointer focus:bg-hover-btn-bg disabled:bg-btn-bg/40 border-zinc-400 transition-colors"} p-3 mobile:px-4 ${lessonWords[idx].word.length > 20 ? "text-bs" : "text-lg"} font-semibold border transition`}
                     disabled={Boolean(pressedBtns.word && pressedBtns?.word !== lessonWords[idx]._id)}
                   >
                     {lessonWords[idx].word}
@@ -249,7 +249,7 @@ export default function Pairs() {
                   <button
                     key={`t-${lessonWords[idx]._id}`}
                     onClick={() => handleBtnClick(lessonWords[idx]._id, lessonWords[idx].word, lessonWords[idx].translation, true)}
-                    className={`${hiddenPairs.has(lessonWords[idx]._id) ? "opacity-0 transition-opacity" : "text-center rounded-lg text-white bg-rose-800 hover:bg-rose-900 hover:cursor-pointer focus:bg-rose-900 disabled:bg-rose-800/40 border-zinc-400 transition-colors"} p-3 mobile:px-4 text-sm mobile:text-base font-semibold border`}
+                    className={`${hiddenPairs.has(lessonWords[idx]._id) ? "opacity-0 transition-opacity" : "text-center rounded-lg text-white bg-rose-800 hover:bg-rose-900 hover:cursor-pointer focus:bg-rose-900 disabled:bg-rose-800/40 border-zinc-400 transition-colors"} p-3 mobile:px-4 ${lessonWords[idx].translation.length > 20 ? "text-bs" : "text-lg"} font-semibold border`}
                     disabled={Boolean(pressedBtns.translation && pressedBtns?.translation !== lessonWords[idx]._id)}
                   >
                     {lessonWords[idx].translation}
