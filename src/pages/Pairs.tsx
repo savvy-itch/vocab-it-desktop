@@ -59,15 +59,7 @@ export default function Pairs() {
           setPressedBtns({ ...pressedBtns, translation: id });
         }
       } else if (pressedBtns?.word === id) {
-        // correct guess
-        if (soundOn) {
-          playSuccess();
-        }
-        const updatedPairs = new Set(hiddenPairs).add(id);
-        setHiddenPairs(updatedPairs);
-        registerAnswer(id, word, translation, word);
-        setPressedBtns({ word: null, translation: null });
-        checkCardUpdate(updatedPairs);
+        handleCorrectAnswer(id, word, translation);
       } else {
         // wrong guess
         if (soundOn) {
@@ -92,15 +84,7 @@ export default function Pairs() {
           setPressedBtns({ ...pressedBtns, word: id });
         }
       } else if (pressedBtns?.translation === id) {
-        // correct guess
-        if (soundOn) {
-          playSuccess();
-        }
-        const updatedPairs = new Set(hiddenPairs).add(id);
-        setHiddenPairs(updatedPairs);
-        registerAnswer(id, word, translation, word);
-        setPressedBtns({ word: null, translation: null });
-        checkCardUpdate(updatedPairs);
+        handleCorrectAnswer(id, word, translation);
       } else {
         // wrong guess
         if (soundOn) {
@@ -115,19 +99,32 @@ export default function Pairs() {
     }
   }
 
-  function registerAnswer(id: string, word: string, translation: string, userAnswer: string) {
+  function handleCorrectAnswer(id: string, word: string, translation: string) {
+    if (soundOn) {
+      playSuccess();
+    }
+    const updatedPairs = new Set(hiddenPairs).add(id);
+    setHiddenPairs(updatedPairs);
+    const newAnswers: Answer[] = registerAnswer(id, word, translation, word);
+    setPressedBtns({ word: null, translation: null });
+    checkCardUpdate(updatedPairs, newAnswers);
+  }
+
+  function registerAnswer(id: string, word: string, translation: string, userAnswer: string): Answer[] {
     const answer: Answer = {
       _id: id,
       word,
       translation,
       userAnswer
     };
-    setAllAnswers(prev => [...prev, answer]);
+    const newAnswers = [...allAnswers, answer];
+    setAllAnswers(newAnswers);
+    return newAnswers;
   }
 
-  function checkCardUpdate(updatedPairs: Set<string>) {
+  function checkCardUpdate(updatedPairs: Set<string>, newAnswers: Answer[]) {
     if ((curCardCount + 1) === trueRounds && updatedPairs.size === curCardSize) {
-      updateProgress(allAnswers);
+      updateProgress(newAnswers);
     } else if (updatedPairs.size === curCardSize && updatedPairs.size > 0) {
       // next card
       setCurCardCount(prev => prev + 1);

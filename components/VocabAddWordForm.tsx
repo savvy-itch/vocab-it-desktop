@@ -21,11 +21,10 @@ export default function VocabAddWordForm({ vocabWords, vocabId, checkSingleEdit 
 }) {
   const [newWord, setNewWord] = useState<string>('');
   const [translation, setTranslation] = useState<string>('');
-  const { words } = useWordStore(state => state);
+  const { words, addWord } = useWordStore(state => state);
   const { isAddWord, toggleIsAddWord } = useProfileStore(state => state);
   const [errorMsg, setErrorMsg] = useState<string>('');
   const soundOn = useStore(usePreferencesStore, (state) => state.soundOn);
-  const { addWord } = useWordStore(state => state);
   const { addWordId } = useVocabStore(state => state);
   const [playError] = useSound(errorSound, { volume: SOUND_VOLUME });
 

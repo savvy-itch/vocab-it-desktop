@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { CheckSingleEditFunction, VocabLocal, WordLocal } from '@/lib/types';
 import useSound from 'use-sound';
 import { SOUND_VOLUME, errorSound } from '@/lib/globals';
@@ -9,6 +9,7 @@ import { useStore } from 'zustand';
 import { usePreferencesStore } from '@/lib/preferencesStore';
 import { useWordStore } from '@/lib/wordStore';
 import { useVocabStore } from '@/lib/vocabStore';
+import { calcCorrectnessPercentage } from '@/lib/utils';
 
 type SingleWordProps = {
   word: WordLocal,
@@ -27,6 +28,11 @@ export default function SingleWord({ word, vocab, checkSingleEdit, isLastWord }:
   const soundOn = useStore(usePreferencesStore, (state) => state.soundOn);
   const [playError] = useSound(errorSound, { volume: SOUND_VOLUME });
   const [progressStatus, setProgressStatus] = useState<string>('absent');
+
+  const progress = useMemo(
+    () => calcCorrectnessPercentage(word.answCor, word.trained),
+    [word]
+  );
 
   function enterEditWordMode() {
     const isOnlyEdit: boolean = checkSingleEdit();
@@ -80,23 +86,18 @@ export default function SingleWord({ word, vocab, checkSingleEdit, isLastWord }:
   }
 
   useEffect(() => {
-    if (word.trained) {
-      // check explicitly for the type because while word.progress: 0 is falsy to TS, it's a valid value for the logic
-      if (typeof (word.progress) === 'number') {
-        if (word.progress < 50) {
-          setProgressStatus('poor');
-        } else if (word.progress >= 50 && word.progress < 75) {
-          setProgressStatus('normal');
-        } else if (word.progress >= 75) {
-          setProgressStatus('good');
-        }
-      } else {
-        setProgressStatus('absent');
+    if (word.trained > 0) {
+      if (progress < 50) {
+        setProgressStatus('poor');
+      } else if (progress >= 50 && progress < 75) {
+        setProgressStatus('normal');
+      } else if (progress >= 75) {
+        setProgressStatus('good');
       }
     } else {
       setProgressStatus('absent');
     }
-  }, [word]);
+  }, [word, progress]);
 
   return (
     <article className="text-sm mobile:text-base">
@@ -138,7 +139,7 @@ export default function SingleWord({ word, vocab, checkSingleEdit, isLastWord }:
       ) : (
         <div className="flex justify-between items-center my-1 p-2 rounded-md dark:border-main-bg-dark hover:bg-slate-100 dark:hover:bg-custom-highlight2 focus:bg-slate-100 dark:focus:bg-custom-highlight2 transition-colors">
           <p className="w-2/5">{word.word}</p>
-          <p className="w-1/4 break-words">{word.translation}</p>
+          <p className="w-1/4 wrap-break-words">{word.translation}</p>
           <div
             className={`h-4 w-4 border border-slate-500 dark:border-white rounded-full
             ${progressStatus === 'absent'

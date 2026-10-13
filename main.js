@@ -1,4 +1,4 @@
-import { session } from 'electron';
+import { ipcMain, session } from 'electron';
 import { app, BrowserWindow } from 'electron/main';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -12,6 +12,7 @@ const createWindow = () => {
     height: 700,
     webPreferences: {
       nodeIntegration: false,
+      preload: path.join(__dirname, 'preload.js')
     },
     titleBarStyle: 'hidden',
     ...(process.platform !== 'darwin'
@@ -21,9 +22,13 @@ const createWindow = () => {
     icon: path.join(__dirname, 'dist/images/AppList.targetsize-96.png')
   });
 
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
   win.loadFile(path.join(__dirname, './dist', 'index.html'));
 }
+
+ipcMain.handle('getAppVersion', () => {
+  return app.getVersion();
+});
 
 app.removeAllListeners('ready');
 app.whenReady().then(() => {

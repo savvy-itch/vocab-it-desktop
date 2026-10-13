@@ -25,15 +25,15 @@
   --animate-wiggle: wiggle 0.3s ease-in-out;
 
   --color-main-bg-light: #f2e6ce;
-  --color-main-bg-dark: #352f44;
+  --color-main-bg-dark: #2c2738;
 
   --color-secondary-bg-light: #ba4949;
-  --color-secondary-bg-dark: #4d3c77;
+  --color-secondary-bg-dark: #493d66;
 
   --color-custom-text-light: #392235;
   --color-custom-text-dark: #f8f5ec;
 
-  --color-custom-highlight: #6a6576;
+  --color-custom-highlight: #605c6b;
   --color-custom-highlight2: #837e90;
   --color-custom-highlight3: hsl(26, 92%, 52%);
   --color-btn-bg: #048645;

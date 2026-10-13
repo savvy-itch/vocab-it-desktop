@@ -91,7 +91,7 @@ export default function FileForm({ vocabId, vocabWordIds }: { vocabId: string, v
         while (words[wordId]) {
           wordId = nanoid();
         }
-        uniqueWords.push({ ...word, _id: wordId, vocabId, progress: 0, trained: 0 });
+        uniqueWords.push({ ...word, _id: wordId, vocabId, answCor: 0, trained: 0 });
       }
     }
     if (uniqueWords.length > 0) {

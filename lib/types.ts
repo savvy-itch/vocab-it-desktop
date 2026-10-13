@@ -46,6 +46,17 @@ export interface WordLocal {
   vocabId: string,
   word: string,
   translation: string,
+  answCor: number,
+  trained: number,
+  isGuessCorrect?: boolean
+}
+
+// v0
+export interface OldWordLocal {
+  _id: string,
+  vocabId: string,
+  word: string,
+  translation: string,
   progress: number,
   trained: number,
   isGuessCorrect?: boolean

@@ -1,9 +1,17 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import type { WordLocal } from "./types";
+import type { OldWordLocal, WordLocal } from "./types";
  
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+export function calcCorrectnessPercentage(answCor: number, trained: number): number {
+  if (trained === 0) {
+    return 0;
+  }
+  const res = Math.round(answCor / trained * 100);
+  return res;
 }
 
 export function getProgressPercentage(prev: number, trained: number, isCorrect: boolean): number {
@@ -48,3 +56,8 @@ export function shuffleIndices(arr: number[]): number[] {
   return shuffledArr;
 }
 
+// calculates the number of correct answers for WordLocal schema v0
+export function oldCalcCorrectAnswers(word: OldWordLocal): number {
+  const res = Math.round(word.trained * word.progress / 100);
+  return res;
+}

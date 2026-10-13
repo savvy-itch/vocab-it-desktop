@@ -17,6 +17,7 @@ import { Toaster } from '@/components/ui/toaster';
 import Footer from '@/components/Footer';
 import { FaShuffle } from 'react-icons/fa6';
 import { MdOutlineTranslate } from "react-icons/md";
+import { calcCorrectnessPercentage } from '@/lib/utils';
 
 export default function Vocab() {
   const params = useParams();
@@ -50,7 +51,7 @@ export default function Vocab() {
     if (currWords.length === 0) {
       return 0;
     }
-    const totalRate: number = currWords.reduce((acc, val) => acc + val.progress, 0);
+    const totalRate: number = currWords.reduce((acc, val) => acc + calcCorrectnessPercentage(val.answCor, val.trained), 0);
     return Math.round(totalRate / currWords.length);
   }
 

@@ -1,7 +1,7 @@
 {
   "name": "vocab-it-desktop",
   "author": "Michael Savych",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Desktop app for learning languages",
   "main": "main.js",
   "type": "module",

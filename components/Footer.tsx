@@ -1,17 +1,18 @@
 import { HiOutlineExternalLink } from "react-icons/hi";
-import { version } from '../package.json';
+import { useEffect, useState } from "react";
 
 export default function Footer() {
+  const [version, setVersion] = useState('');
+
+  useEffect(() => {
+    window.electronAPI.getVersion().then(setVersion);
+  }, []);
+
   return (
     <footer className="py-5 mobile:py-7 transition-colors bg-zinc-800 text-gray-300 text-center"
       data-testid="footer"
     >
       <div className="w-11/12 flex-col mobile:flex-row sm:w-4/5 mx-auto flex gap-3 justify-between">
-        <div>
-          <p className="text-xl text-center mobile:text-left">Vocab-It</p>
-          <p className="text-center mobile:text-left">A web app for learning languages</p>
-          <p className="text-center mobile:text-left text-sm mt-2">Developed by Michael Savych</p>
-        </div>
         <div>
           <h2 className="text-xl font-semibold mb-2">References</h2>
           <ul>
